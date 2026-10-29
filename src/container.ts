@@ -36,7 +36,7 @@ export async function buildContainer(config: Config) {
   const redis = new Redis(config.REDIS_URL, {
     enableAutoPipelining: true,
     maxRetriesPerRequest: 1,
-    commandTimeout: 200,
+    commandTimeout: config.REDIS_COMMAND_TIMEOUT_MS,
   });
   redis.on("error", (err) => logger.warn({ err }, "redis connection error"));
 

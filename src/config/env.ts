@@ -11,6 +11,8 @@ const schema = z.object({
   MONGO_MAX_POOL_SIZE: z.coerce.number().int().positive().default(100),
 
   REDIS_URL: z.string().min(1).default("redis://localhost:6379"),
+  /** Raise for managed Redis over the public internet (e.g. 1000). */
+  REDIS_COMMAND_TIMEOUT_MS: z.coerce.number().int().positive().default(200),
   CACHE_TTL_SECONDS: z.coerce.number().int().positive().default(86_400),
   NEGATIVE_CACHE_TTL_SECONDS: z.coerce.number().int().positive().default(60),
 
