@@ -1,0 +1,39 @@
+services:
+  app:
+    build: .
+    ports:
+      - "${HOST_PORT:-8080}:3000"
+    environment:
+      NODE_ENV: production
+      BASE_URL: http://localhost:${HOST_PORT:-8080}
+      MONGO_URI: mongodb://mongo:27017
+      REDIS_URL: redis://redis:6379
+      RATE_LIMIT_MAX: "100000"
+      SHUTDOWN_GRACE_MS: "5000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--save", ""]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  mongo-data:
