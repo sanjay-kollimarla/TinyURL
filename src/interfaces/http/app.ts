@@ -1,4 +1,4 @@
-import { Hono } from "hono";
+import { type Context, Hono } from "hono";
 import { bodyLimit } from "hono/body-limit";
 import { secureHeaders } from "hono/secure-headers";
 import type { z } from "zod";
@@ -8,7 +8,7 @@ import type { RedirectService } from "../../application/redirect.service";
 import { ValidationError } from "../../domain/errors";
 import type { Link } from "../../domain/link";
 import { errorHandler } from "./error-handler";
-import { LANDING_HTML } from "./landing";
+import { FAVICON_SVG, LANDING_HTML } from "./landing";
 import { type AppEnv, apiKeyAuth, rateLimit } from "./middleware";
 import { requestContext } from "./request-context";
 import { createLinkSchema, statsQuerySchema } from "./schemas";
@@ -61,6 +61,10 @@ export function createApp(deps: AppDependencies): Hono<AppEnv> {
   }
 
   app.get("/", (c) => c.html(LANDING_HTML));
+  const favicon = (c: Context) =>
+    c.body(FAVICON_SVG, 200, { "content-type": "image/svg+xml", "cache-control": "public, max-age=86400" });
+  app.get("/favicon.svg", favicon);
+  app.get("/favicon.ico", favicon);
   app.notFound((c) => c.json({ error: { code: "NOT_FOUND", message: "Route not found" } }, 404));
 
   app.get("/healthz", (c) => c.json({ status: "ok" }));

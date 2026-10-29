@@ -100,6 +100,17 @@ describe("HTTP API", () => {
     expect(await missing.json()).toMatchObject({ error: { code: "NOT_FOUND" } });
   });
 
+  test("serves the favicon and credits the author on the home page", async () => {
+    for (const path of ["/favicon.svg", "/favicon.ico"]) {
+      const icon = await app.request(path);
+      expect(icon.status).toBe(200);
+      expect(icon.headers.get("content-type")).toBe("image/svg+xml");
+    }
+    const html = await (await app.request("/")).text();
+    expect(html).toContain('rel="icon"');
+    expect(html).toContain("Sanjay Kollimarla");
+  });
+
   test("health endpoints respond", async () => {
     expect((await app.request("/healthz")).status).toBe(200);
     expect((await app.request("/readyz")).status).toBe(200);
