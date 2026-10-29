@@ -1,5 +1,7 @@
 const AUTHOR_NAME = "Sanjay Kollimarla";
 const AUTHOR_URL = "https://github.com/sanjay-kollimarla";
+const PORTFOLIO_URL = "https://sanjay-kollimarla.vercel.app/";
+const LINKEDIN_URL = "https://linkedin.com/in/kollimarla-sai-sanjay";
 const REPO_URL = "https://github.com/sanjay-kollimarla/TinyURL";
 
 /** Two interlocked chain links on a rounded blue tile; scales cleanly down to 16px. */
@@ -29,7 +31,10 @@ export const LANDING_HTML = `<!doctype html>
   .brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.1rem; }
   .brand img { width: 28px; height: 28px; }
   .by { font-size: .9rem; opacity: .85; }
+  .by { text-align: right; }
   .by a { color: inherit; font-weight: 600; }
+  .links { margin-top: .2rem; font-size: .8rem; opacity: .8; }
+  .links a { font-weight: 400; }
   h1 { margin-bottom: .25rem; }
   p.sub { margin-top: 0; opacity: .7; }
   form { display: grid; gap: .75rem; }
@@ -45,7 +50,14 @@ export const LANDING_HTML = `<!doctype html>
 <body>
 <header>
   <div class="brand"><img src="/favicon.svg" alt="">TinyURL</div>
-  <div class="by">Designed &amp; built by <a href="${AUTHOR_URL}" target="_blank" rel="noopener">${AUTHOR_NAME}</a></div>
+  <div class="by">
+    Designed &amp; built by <a href="${PORTFOLIO_URL}" target="_blank" rel="noopener">${AUTHOR_NAME}</a>
+    <div class="links">
+      <a href="${PORTFOLIO_URL}" target="_blank" rel="noopener">Portfolio</a> ·
+      <a href="${LINKEDIN_URL}" target="_blank" rel="noopener">LinkedIn</a> ·
+      <a href="${AUTHOR_URL}" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
 </header>
 <h1>Shorten a link</h1>
 <p class="sub">Optional alias and expiry. Redirects are cached in Redis and clicks are counted asynchronously.</p>
@@ -60,7 +72,8 @@ export const LANDING_HTML = `<!doctype html>
 </form>
 <div id="result" aria-live="polite"></div>
 <footer>
-  Built by <a href="${AUTHOR_URL}" target="_blank" rel="noopener">${AUTHOR_NAME}</a> with Bun, TypeScript, MongoDB and Redis.
+  Built by <a href="${PORTFOLIO_URL}" target="_blank" rel="noopener">${AUTHOR_NAME}</a> with Bun, TypeScript, MongoDB and Redis.
+  <a href="${LINKEDIN_URL}" target="_blank" rel="noopener">LinkedIn</a> ·
   <a href="${REPO_URL}" target="_blank" rel="noopener">Source on GitHub</a>
 </footer>
 <script>

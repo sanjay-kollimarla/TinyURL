@@ -109,6 +109,8 @@ describe("HTTP API", () => {
     const html = await (await app.request("/")).text();
     expect(html).toContain('rel="icon"');
     expect(html).toContain("Sanjay Kollimarla");
+    expect(html).toContain("https://sanjay-kollimarla.vercel.app/");
+    expect(html).toContain("https://linkedin.com/in/kollimarla-sai-sanjay");
   });
 
   test("health endpoints respond", async () => {
